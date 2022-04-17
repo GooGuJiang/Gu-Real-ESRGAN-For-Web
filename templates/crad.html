@@ -1,0 +1,15 @@
+  <!--卡片样式-->
+<div>
+  <div style="margin: 10px;width: 95%;border-radius: 10px;" class="  mdui-center" on>
+    <div class="mdui-row mdui-row-gapless" style="width: 99%;">
+  <p class="mdui-text-truncate mdui-img-rounded" style="margin: 20px;max-width: 200px;">{{card_name}}</p>
+        <img class="mdui-img-rounded" style="margin-left: 17px;margin-bottom: -14px;" src="{{imgdata}}">
+  <button class="mdui-img-rounded mdui-btn mdui-color-blue mdui-ripple mdui-btn-raised" onclick="window.open('{{dl_url}}');location.reload();" {{buut}}>下载</button>
+  <strong class="mdui-float-right" style="margin-bottom: -20px;" id="outtext" >{{imgload_text}}</strong>
+    </div>
+
+    <div class="mdui-col-xs-4 mdui-progress" style="margin: 10px;width: 97%;">
+        <div class="mdui-progress-determinate" style="width: {{imgload}}%;"></div>
+    </div>
+</div>
+<!--卡片样式-->

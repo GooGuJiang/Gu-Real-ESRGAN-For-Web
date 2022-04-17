@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<head>
+    <meta charset="utf-8">
+    <title>咕 Real-ESRGAN</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/mdui.min.css') }}">
+    <link rel="shortcut icon" href="{{ url_for('static', filename='img/logo.png') }}">
+    <script src="http://libs.baidu.com/jquery/2.0.0/jquery.min.js"></script>
+    <script>
+      //$(function () {
+          /* 使用ajax异步提交请求数据，响应数据（回调函数） */
+        //  $.get("header.html",function (data) {
+        //      $("#header").html(data);
+       //   });
+      //});
+    
+    
+      function getClientsStatus(getimg,min_img,file_name) {
+        var sttop = "";
+        var refresh_client = function() {
+            $.get("getinfo?img_name="+getimg+"&filename="+file_name,
+            function(data) {
+                $("#rww").html(data);
+            });
+            $.get("get_start?img_name="+getimg,
+            function(gguug) {
+                if(gguug.img_st=="ok"){
+                  clearInterval(sttop);
+                };
+            });
+        };
+
+        refresh_client();
+        var sttop = setInterval(refresh_client, 2500); //2.5秒定时刷新一次
+    };
+    </script>
+</head>
+
+<body style="background-color:lightblue;">
+<!--顶部-->
+<div class="mdui-appbar">
+  <div class="mdui-toolbar mdui-color-blue">
+    <a class="mdui-btn mdui-btn-icon" mdui-dialog="{target: '#info'}">
+      <i class="mdui-icon material-icons">aspect_ratio</i>
+    </a>
+    <a href="javascript:;" class="mdui-typo-headline">咕 Real-ESRGAN</a>
+  </div>
+</div>
+<!--顶部-->
+
+    <!-- Change action value to your upload address -->
+<div class="mdui-card" style="margin: 10px;border-radius: 10px;">
+
+  <link rel="stylesheet" href="{{ url_for('static', filename='dropzone.css') }}">
+  <script src="{{ url_for('static', filename='dropzone.min.js') }}"></script>
+  <form action="/upload" class="dropzone" id="my-great-dropzone" style="margin: 10px;border-radius: 5px;"></form>
+
+
+  
+<script>
+
+
+  Dropzone.options.myGreatDropzone = { 
+    paramName: "file", 
+    parallelUploads:1,
+    maxFiles: 1,//一次性上传的文件数量上限
+    maxFilesize: 10, //文件大小，单位：MB
+    acceptedFiles: ".jpg,.png,.jpeg", //上传的类型
+    parallelUploads: 1,//一次上传的文件数量
+    dictDefaultMessage: '拖动文件至此或者点击上传 最大10MB',
+    dictMaxFilesExceeded: "您最多只能上传1个文件！",
+    dictResponseError: '文件上传失败!',
+    dictInvalidFileType: "文件类型只能是*.jpg,*.png,*.jpeg。",
+    dictFallbackMessage: "浏览器不受支持",
+    dictFileTooBig: "文件过大上传文件最大支持.",
+    dictRemoveLinks: "删除",
+    dictRemoveFile: "取消",
+    autoProcessQueue:true,
+    addRemoveLinks:false,
+
+    //success: function(file, response){ 
+     //alert(response); 
+    //console.log(response); 
+    //} 
+    init: function () {
+            this.on("addedfile", function (file) {
+              //上传文件时触发的事件
+
+            });
+            this.on("success", function (file, data) {
+                //上传成功触发的事件
+                //console.log(data);
+                //console.log(data.code);
+                getClientsStatus(data.img_name,data.min_img,file.name);
+
+            });
+            this.on("error", function (file, data) {
+                //上传失败触发的事件
+ 
+            });
+            this.on("removedfile", function (file) {//删除文件触发结果
+                //console.log(file);
+                //$("#avatarImgId").val("");
+            });
+        }
+
+
+  };
+  
+</script>
+</div>
+<div class="mdui-card" style="margin: 10px;border-radius: 10px;">
+  <h1 style="margin: 5px;">任务信息</h1>
+  <div class="mdui-divider"></div>
+  <div id="rww">
+    <h1 class="" style="margin: 10px;margin-left: 20px;">暂无任务，请上传图片</h1>
+  </div>
+</div>
+
+<!--弹窗-->
+
+<!--弹窗-->
+<link rel="stylesheet" href="{{ url_for('static', filename='js/mdui.min.js') }}">
+
+</body>
+
